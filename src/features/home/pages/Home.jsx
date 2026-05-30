@@ -1,68 +1,73 @@
-import { useState } from "react";
-import Header from "../../../shared/components/Header";
+import { useState, useEffect } from "react";
 import Sidebar from "../../../shared/components/Sidebar";
-import WelcomeStrip from "../components/WelcomeStrip";
-import DailySummary from "../components/DailySummary";
-import PorsiCard from "../components/PorsiCard";
+import Header from "../../../shared/components/Header";
+import RankBar from "../components/RankBar";
+import ProfileMissionCard from "../components/ProfileMissionCard";
+import api from "../../../shared/utils/api";
 
 export default function Home() {
   const [isOpen, setIsOpen] = useState(() => window.innerWidth >= 1024);
+  const [profiles, setProfiles] = useState([]);
+  const [rank, setRank] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  const xp = 250; // 🔥 sementara (nanti ambil dari user/profile)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // 🔥 ambil missions
+        const missionRes = await api.get("/user-missions");
+        setProfiles(missionRes.data.data || []);
+
+        // 🔥 ambil rank
+        const rankRes = await api.get("/rank/xp");
+        setRank(rankRes.data.data);
+
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) return <div className="p-5">Loading...</div>;
 
   return (
     <div className="bg-gray-100 min-h-screen">
 
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
 
-      {/* CONTENT */}
-      <div
-        className={`flex flex-col min-h-screen transition-all duration-300
-        ${isOpen ? "lg:ml-64" : "ml-0"}
-      `}
-      >
+      <div className={`flex flex-col min-h-screen ${isOpen ? "lg:ml-64" : ""}`}>
+
         <Header isOpen={isOpen} setIsOpen={setIsOpen} />
 
-        <main className="p-4 sm:p-6 lg:p-8 overflow-y-auto flex-1">
-          <div className="max-w-5xl mx-auto">
+        <main className="p-4 sm:p-6 lg:p-8 flex-1">
+          <div className="max-w-5xl mx-auto space-y-6">
 
-            <WelcomeStrip />
+            {/* 🔥 RANK */}
+            <RankBar rank={rank} xp={xp} />
 
-            <div className="mt-6 space-y-6">
-
-              <div className="flex justify-between items-center">
-                <h2 className="font-bold text-lg">Ringkasan Hari Ini</h2>
-                <span className="text-green-600 text-sm font-semibold">
-                  Lihat Detail
-                </span>
+            {/* 🔥 LIST PROFILE */}
+            {profiles.length === 0 ? (
+              <div className="text-center text-gray-500">
+                Tidak ada misi hari ini
               </div>
+            ) : (
+              profiles.map((item) => (
+                <ProfileMissionCard
+                  key={item.profile.id}
+                  item={item}
+                />
+              ))
+            )}
 
-              <DailySummary />
-
-              <div className="flex justify-between items-center">
-                <h2 className="font-bold text-lg">3 Porsi Terakhir</h2>
-                <span className="text-green-600 text-sm font-semibold">
-                  Semua riwayat
-                </span>
-              </div>
-
-              <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                <PorsiCard />
-                <PorsiCard />
-                <PorsiCard />
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-3">
-                <button className="flex-1 h-12 bg-green-500 text-white rounded-xl font-bold">
-                  Tambah Porsi
-                </button>
-
-                <button className="flex-1 h-12 border border-green-500 text-green-600 rounded-xl font-semibold">
-                  Lihat Riwayat
-                </button>
-              </div>
-
-            </div>
           </div>
         </main>
+
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
 import { Check, X } from "lucide-react";
 
 export default function MissionCard({ data }) {
-  const isCompleted = data.is_completed;
+  const isCompleted = data.done;
 
   return (
     <div className="bg-white p-5 rounded-xl border border-gray-100 shadow-sm flex flex-col gap-2">
