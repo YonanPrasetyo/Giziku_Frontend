@@ -44,6 +44,8 @@ export default function Sidebar({ isOpen, setIsOpen }) {
               <>
                 <NavItem to="/admin/missions" label="Kelola Misi" setIsOpen={setIsOpen} />
                 <NavItem to="/admin/ranks" label="Kelola Rank" setIsOpen={setIsOpen} />
+                <NavItem to="/admin/foods" label="Kelola Foods" setIsOpen={setIsOpen} />
+                <NavItem to="/admin/nutrition-standards" label="Standar Gizi" setIsOpen={setIsOpen} />
               </>
             )}
 

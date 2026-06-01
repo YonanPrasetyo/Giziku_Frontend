@@ -11,6 +11,10 @@ import AdminMissions from "./features/missions/pages/AdminMissions";
 import MissionForm from "./features/missions/pages/MissionForm";
 import AdminRanks from "./features/rank/pages/AdminRanks";
 import RankForm from "./features/rank/pages/RankForm";
+import AdminFoods from "./features/foods/pages/AdminFoods";
+import FoodForm from "./features/foods/pages/FoodForm";
+import AdminNutritionStandards from "./features/nutritionStandards/pages/AdminNutritionStandards";
+import NutritionStandardForm from "./features/nutritionStandards/pages/NutritionStandardForm";
 import Profile from "./features/profile/pages/Profile";
 import ProfileForm from "./features/profile/pages/ProfileForm";
 import './App.css';
@@ -43,6 +47,14 @@ function App() {
           <Route path="/admin/ranks" element={<PrivateRoute roles={["admin"]}> <AdminRanks /> </PrivateRoute>} />
           <Route path="/admin/ranks/create" element={<PrivateRoute roles={["admin"]}> <RankForm /> </PrivateRoute>} />
           <Route path="/admin/ranks/edit/:id" element={<PrivateRoute roles={["admin"]}> <RankForm /> </PrivateRoute>} />
+
+          <Route path="/admin/foods" element={<PrivateRoute roles={["admin"]}> <AdminFoods /> </PrivateRoute>} />
+          <Route path="/admin/foods/create" element={<PrivateRoute roles={["admin"]}> <FoodForm /> </PrivateRoute>} />
+          <Route path="/admin/foods/edit/:id" element={<PrivateRoute roles={["admin"]}> <FoodForm /> </PrivateRoute>} />
+
+          <Route path="/admin/nutrition-standards" element={<PrivateRoute roles={["admin"]}> <AdminNutritionStandards /> </PrivateRoute>} />
+          <Route path="/admin/nutrition-standards/create" element={<PrivateRoute roles={["admin"]}> <NutritionStandardForm /> </PrivateRoute>} />
+          <Route path="/admin/nutrition-standards/edit/:id" element={<PrivateRoute roles={["admin"]}> <NutritionStandardForm /> </PrivateRoute>} />
 
           {/* Catch all - redirect to home */}
           <Route path="*" element={<Navigate to="/" replace />} />
