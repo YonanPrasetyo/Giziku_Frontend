@@ -13,6 +13,8 @@ import BottomActions from "../components/BottomActions";
 import { getResultById, getNutritionStandard } from "../services/resultService";
 
 export default function ResultPage() {
+  const [isOpen, setIsOpen] = useState(() => window.innerWidth >= 1024);
+
   const { id } = useParams();
   const token = localStorage.getItem("token");
 
@@ -36,13 +38,13 @@ export default function ResultPage() {
   if (!result || !standard) return <div>Loading...</div>;
 
   return (
-    <div className="flex">
-      <Sidebar />
+    <div className="bg-gray-100 min-h-screen">
+      <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
 
-      <div className="flex-1 min-h-screen bg-gray-100">
-        <Header />
+      <div className={`flex flex-col min-h-screen ${isOpen ? "lg:ml-64" : ""}`}>
+        <Header isOpen={isOpen} setIsOpen={setIsOpen} />
 
-        <div className="p-4 md:p-6 max-w-5xl mx-auto space-y-4">
+        <main className="w-full p-4 md:p-6 max-w-6xl mx-auto space-y-4 flex-1">
           <FoodIdentityCard data={result} />
           <EnergyHero data={result} standard={standard} />
 
@@ -83,9 +85,7 @@ export default function ResultPage() {
 
           <SummaryTable result={result} standard={standard} />
           <DailyContribution result={result} standard={standard} />
-
-          <div className="h-24" />
-        </div>
+        </main>
 
         <BottomActions />
       </div>

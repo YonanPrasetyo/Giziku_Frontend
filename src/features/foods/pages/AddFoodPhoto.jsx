@@ -4,7 +4,6 @@ import Sidebar from "../../../shared/components/Sidebar";
 import Header from "../../../shared/components/Header";
 import UploadCard from "../components/UploadCard";
 import ProfileSelectCard from "../components/ProfileSelectCard";
-import InfoBox from "../components/InfoBox";
 import SubmitSection from "../components/SubmitSection";
 import api from "../../../shared/utils/api";
 
@@ -60,7 +59,8 @@ export default function AddFoodPhoto() {
         },
       });
 
-      const resultId = res.data.id;
+      const resultId = res.data.data.id;
+      console.log("Upload berhasil, result ID:", res.data);
 
       navigate("/result/" + resultId);
     } catch (err) {
@@ -96,9 +96,6 @@ export default function AddFoodPhoto() {
               selectedProfile={selectedProfile}
               setSelectedProfile={setSelectedProfile}
             />
-
-            {/* INFO */}
-            <InfoBox />
 
             {/* SUBMIT */}
             <SubmitSection onSubmit={handleSubmit} />

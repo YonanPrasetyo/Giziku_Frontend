@@ -19,11 +19,13 @@ export default function Dashboard() {
   const [summary, setSummary] = useState(null);
   const [latestMeals, setLatestMeals] = useState([]);
 
+  const [standard, setStandard] = useState(null);
+
   useEffect(() => {
     const fetchProfiles = async () => {
       const res = await api.get("/profiles");
       setProfiles(res.data.data);
-      setSelectedProfile(res.data.data[0]?.id);
+      setSelectedProfile(String(res.data.data[0]?.id || ""));
     };
     fetchProfiles();
   }, []);
@@ -31,22 +33,28 @@ export default function Dashboard() {
   useEffect(() => {
     if (!selectedProfile) return;
 
+    const selected = profiles.find(p => String(p.id) === selectedProfile);
+    if (!selected) return;
+
     const fetchData = async () => {
       try {
-        const [summaryRes, latestRes] = await Promise.all([
+        const [summaryRes, latestRes, standardRes] = await Promise.all([
           api.get(`/results/profiles/${selectedProfile}/today`),
           api.get(`/results/profiles/${selectedProfile}/latest`),
+          api.get(`/nutrition-standards/age/${selected.age}/gender/${selected.gender}`)
         ]);
 
         setSummary(summaryRes.data.data);
         setLatestMeals(latestRes.data.data);
+        setStandard(standardRes.data.data);
+
       } catch (err) {
         console.error(err);
       }
     };
 
     fetchData();
-  }, [selectedProfile]);
+  }, [selectedProfile, profiles]);
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -61,6 +69,10 @@ export default function Dashboard() {
             <WelcomeStrip />
 
             <div>
+              <div className="mb-2">
+                <h2 className="text-lg font-bold">Pilih Profile</h2>
+              </div>
+
               <ProfileDropdown
                 profiles={profiles}
                 selected={selectedProfile}
@@ -68,13 +80,15 @@ export default function Dashboard() {
               />
             </div>
 
-            <DailySummary data={summary} />
-            <LatestMeals meals={latestMeals} />
+
             
+            <DailySummary data={summary} standard={standard} />
+            <LatestMeals meals={latestMeals} />
+
             {/* ACTION BUTTONS */}
             <div className="flex gap-3 flex-col sm:flex-row">
               <button
-                onClick={() => navigate("/missions/history")}
+                onClick={() => navigate("/history")}
                 className="flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-600"
               >
                 Histori

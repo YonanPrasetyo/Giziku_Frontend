@@ -8,11 +8,6 @@ export default function SubmitSection({ onSubmit }) {
       >
         Analisis Foto
       </button>
-
-      <button className="w-full h-11 border rounded-xl">
-        Input Manual
-      </button>
-
     </div>
   );
 }

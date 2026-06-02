@@ -6,7 +6,7 @@ export default function ProfileDropdown({ profiles, selected, onChange }) {
       className="w-full border rounded-lg px-3 py-2 text-sm"
     >
       {profiles.map((p) => (
-        <option key={p.id} value={p.id}>
+        <option key={p.id} value={String(p.id)}>
           {p.name}
         </option>
       ))}

@@ -19,6 +19,7 @@ import Profile from "./features/profile/pages/Profile";
 import ProfileForm from "./features/profile/pages/ProfileForm";
 import AddFoodPhoto from "./features/foods/pages/AddFoodPhoto";
 import ResultPage from "./features/foods/pages/ResultPage";
+import ResultHistoryPage from "./features/home/pages/ResultHistoryPage";
 import './App.css';
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
 
           {/* User Routes */}
           <Route path="/" element={<PrivateRoute roles={['user']}> <Home /> </PrivateRoute>} />
+          <Route path="/history" element={<PrivateRoute roles={['user']}> <ResultHistoryPage /> </PrivateRoute>} />
 
           <Route path="/missions" element={<PrivateRoute roles={['user']}> <Missions /> </PrivateRoute>} />
           <Route path="/missions/upload" element={<PrivateRoute roles={['user']}> <MissionUpload /> </PrivateRoute>} />
