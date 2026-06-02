@@ -1,73 +1,79 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Sidebar from "../../../shared/components/Sidebar";
 import Header from "../../../shared/components/Header";
-import RankBar from "../components/RankBar";
-import ProfileMissionCard from "../components/ProfileMissionCard";
 import api from "../../../shared/utils/api";
 
-export default function Home() {
+import ProfileDropdown from "../components/ProfileDropdown";
+import WelcomeStrip from "../components/WelcomeStrip";
+import DailySummary from "../components/DailySummary";
+import LatestMeals from "../components/LatestMeals";
+
+export default function Dashboard() {
   const [isOpen, setIsOpen] = useState(() => window.innerWidth >= 1024);
+
   const [profiles, setProfiles] = useState([]);
-  const [rank, setRank] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [selectedProfile, setSelectedProfile] = useState("");
 
-  const xp = 250; // 🔥 sementara (nanti ambil dari user/profile)
+  const [summary, setSummary] = useState(null);
+  const [latestMeals, setLatestMeals] = useState([]);
 
+  // FETCH PROFILES
   useEffect(() => {
+    const fetchProfiles = async () => {
+      const res = await api.get("/profiles");
+      setProfiles(res.data.data);
+      setSelectedProfile(res.data.data[0]?.id);
+    };
+    fetchProfiles();
+  }, []);
+
+  // FETCH DATA BERDASARKAN PROFILE
+  useEffect(() => {
+    if (!selectedProfile) return;
+
     const fetchData = async () => {
       try {
-        // 🔥 ambil missions
-        const missionRes = await api.get("/user-missions");
-        setProfiles(missionRes.data.data || []);
+        const [summaryRes, latestRes] = await Promise.all([
+          api.get(`/results/profiles/${selectedProfile}/today`),
+          api.get(`/results/profiles/${selectedProfile}/latest`),
+        ]);
 
-        // 🔥 ambil rank
-        const rankRes = await api.get("/rank/xp");
-        setRank(rankRes.data.data);
-
+        setSummary(summaryRes.data.data);
+        setLatestMeals(latestRes.data.data);
       } catch (err) {
         console.error(err);
-      } finally {
-        setLoading(false);
       }
     };
 
     fetchData();
-  }, []);
-
-  if (loading) return <div className="p-5">Loading...</div>;
+  }, [selectedProfile]);
 
   return (
     <div className="bg-gray-100 min-h-screen">
-
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
 
       <div className={`flex flex-col min-h-screen ${isOpen ? "lg:ml-64" : ""}`}>
-
         <Header isOpen={isOpen} setIsOpen={setIsOpen} />
 
         <main className="p-4 sm:p-6 lg:p-8 flex-1">
           <div className="max-w-5xl mx-auto space-y-6">
 
-            {/* 🔥 RANK */}
-            <RankBar rank={rank} xp={xp} />
+            {/* 🔥 PROFILE DROPDOWN (FIX DI SINI) */}
+            <div className="flex justify-end">
+              <ProfileDropdown
+                profiles={profiles}
+                selected={selectedProfile}
+                onChange={setSelectedProfile}
+              />
+            </div>
 
-            {/* 🔥 LIST PROFILE */}
-            {profiles.length === 0 ? (
-              <div className="text-center text-gray-500">
-                Tidak ada misi hari ini
-              </div>
-            ) : (
-              profiles.map((item) => (
-                <ProfileMissionCard
-                  key={item.profile.id}
-                  item={item}
-                />
-              ))
-            )}
+            {/* CONTENT */}
+            <WelcomeStrip />
+            <DailySummary data={summary} />
+            <LatestMeals meals={latestMeals} />
 
           </div>
         </main>
-
       </div>
     </div>
   );
