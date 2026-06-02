@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "../../../shared/components/Sidebar";
 import Header from "../../../shared/components/Header";
 import api from "../../../shared/utils/api";
@@ -9,6 +10,7 @@ import DailySummary from "../components/DailySummary";
 import LatestMeals from "../components/LatestMeals";
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(() => window.innerWidth >= 1024);
 
   const [profiles, setProfiles] = useState([]);
@@ -17,7 +19,6 @@ export default function Dashboard() {
   const [summary, setSummary] = useState(null);
   const [latestMeals, setLatestMeals] = useState([]);
 
-  // FETCH PROFILES
   useEffect(() => {
     const fetchProfiles = async () => {
       const res = await api.get("/profiles");
@@ -27,7 +28,6 @@ export default function Dashboard() {
     fetchProfiles();
   }, []);
 
-  // FETCH DATA BERDASARKAN PROFILE
   useEffect(() => {
     if (!selectedProfile) return;
 
@@ -58,8 +58,9 @@ export default function Dashboard() {
         <main className="p-4 sm:p-6 lg:p-8 flex-1">
           <div className="max-w-5xl mx-auto space-y-6">
 
-            {/* 🔥 PROFILE DROPDOWN (FIX DI SINI) */}
-            <div className="flex justify-end">
+            <WelcomeStrip />
+
+            <div>
               <ProfileDropdown
                 profiles={profiles}
                 selected={selectedProfile}
@@ -67,10 +68,25 @@ export default function Dashboard() {
               />
             </div>
 
-            {/* CONTENT */}
-            <WelcomeStrip />
             <DailySummary data={summary} />
             <LatestMeals meals={latestMeals} />
+            
+            {/* ACTION BUTTONS */}
+            <div className="flex gap-3 flex-col sm:flex-row">
+              <button
+                onClick={() => navigate("/missions/history")}
+                className="flex-1 bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-600"
+              >
+                Histori
+              </button>
+              <button
+                onClick={() => navigate("/add-food-photo")}
+                className="flex-1 bg-green-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-600"
+              >
+                Tambah Foto Makanan
+              </button>
+            </div>
+
 
           </div>
         </main>

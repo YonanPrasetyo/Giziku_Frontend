@@ -8,14 +8,13 @@ export default function WelcomeStrip({ streak }) {
             {new Date().toLocaleDateString()}
           </p>
           <h2 className="text-xl font-extrabold">
-            Halo! 👋
+            Halo!
           </h2>
         </div>
 
         <div className="bg-white/20 px-4 py-2 rounded-xl text-center">
-          <div className="text-xl">🔥</div>
           <div className="font-bold">{streak?.current_streak || 0}</div>
-          <div className="text-xs opacity-80">Hari</div>
+          <div className="text-xs opacity-80">Hari Berturut</div>
         </div>
 
       </div>
