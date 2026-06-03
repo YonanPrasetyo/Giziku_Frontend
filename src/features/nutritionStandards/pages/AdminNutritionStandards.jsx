@@ -63,7 +63,7 @@ export default function AdminNutritionStandards() {
                 standards.map((item) => (
                   <div key={item.id} className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-[1fr_auto] border-b last:border-b-0">
                     <div className="space-y-2">
-                      <p className="text-lg font-semibold">Usia {item.ageMin} - {item.ageMax} tahun</p>
+                      <p className="text-lg font-semibold">Usia {item.age_min} - {item.age_max} tahun</p>
                       <p className="text-sm text-gray-600">Gender: {item.gender}</p>
                       <div className="flex flex-wrap gap-2 text-xs text-gray-700">
                         <span>Kalori: {item.calories}</span>
