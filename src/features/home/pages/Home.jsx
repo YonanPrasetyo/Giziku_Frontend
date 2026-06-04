@@ -73,15 +73,25 @@ export default function Dashboard() {
                 <h2 className="text-lg font-bold">Pilih Profile</h2>
               </div>
 
-              <ProfileDropdown
-                profiles={profiles}
-                selected={selectedProfile}
-                onChange={setSelectedProfile}
-              />
+              {profiles.length === 0 ? (
+                <div className="bg-white p-6 rounded-xl border text-center">
+                  <p className="text-sm text-gray-600 mb-4">Belum ada profil.</p>
+                  <button
+                    onClick={() => navigate("/profile")}
+                    className="bg-green-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-green-600"
+                  >
+                    Tambah Profil
+                  </button>
+                </div>
+              ) : (
+                <ProfileDropdown
+                  profiles={profiles}
+                  selected={selectedProfile}
+                  onChange={setSelectedProfile}
+                />
+              )}
             </div>
 
-
-            
             <DailySummary data={summary} standard={standard} />
             <LatestMeals meals={latestMeals} />
 

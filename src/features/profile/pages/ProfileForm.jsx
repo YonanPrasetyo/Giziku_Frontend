@@ -106,6 +106,7 @@ export default function ProfileForm() {
                 value={form.weight}
                 onChange={handleChange}
                 className="w-full border p-3 rounded-lg"
+                required
               />
 
               <input
@@ -115,6 +116,7 @@ export default function ProfileForm() {
                 value={form.height}
                 onChange={handleChange}
                 className="w-full border p-3 rounded-lg"
+                required
               />
 
               <select
@@ -122,7 +124,9 @@ export default function ProfileForm() {
                 value={form.gender}
                 onChange={handleChange}
                 className="w-full border p-3 rounded-lg"
+                required
               >
+                <option value="">Pilih Gender</option>
                 <option value="M">Laki-laki</option>
                 <option value="F">Perempuan</option>
               </select>
@@ -133,6 +137,7 @@ export default function ProfileForm() {
                 value={form.relation}
                 onChange={handleChange}
                 className="w-full border p-3 rounded-lg"
+                required
               />
 
               <button className="w-full bg-green-500 text-white py-3 rounded-lg font-bold">

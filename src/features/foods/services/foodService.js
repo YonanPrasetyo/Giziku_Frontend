@@ -20,6 +20,15 @@ export const updateFood = async (id, payload) => {
   return res.data;
 };
 
+export const importFoods = async (formData) => {
+  const res = await api.post("/foods/import", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return res.data;
+};
+
 export const deleteFood = async (id) => {
   const res = await api.delete(`/foods/${id}`);
   return res.data;

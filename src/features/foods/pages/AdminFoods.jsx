@@ -2,11 +2,15 @@ import Sidebar from "../../../shared/components/Sidebar";
 import Header from "../../../shared/components/Header";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getFoods, deleteFood } from "../services/foodService";
+import { getFoods, deleteFood, importFoods } from "../services/foodService";
 
 export default function AdminFoods() {
   const [foods, setFoods] = useState([]);
   const [isOpen, setIsOpen] = useState(() => window.innerWidth >= 1024);
+  const [importFile, setImportFile] = useState(null);
+  const [importMessage, setImportMessage] = useState("");
+  const [importError, setImportError] = useState("");
+  const [importing, setImporting] = useState(false);
   const navigate = useNavigate();
 
   const fetchFoods = async () => {
@@ -19,7 +23,11 @@ export default function AdminFoods() {
   };
 
   useEffect(() => {
-    fetchFoods();
+    const loadFoods = async () => {
+      await fetchFoods();
+    };
+
+    loadFoods();
   }, []);
 
   const handleDelete = async (id) => {
@@ -54,6 +62,60 @@ export default function AdminFoods() {
               >
                 + Tambah Food
               </button>
+            </div>
+
+            <div className="bg-white rounded-xl border shadow-sm p-4">
+              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                <div>
+                  <p className="text-sm font-medium">Import file Excel</p>
+                  <p className="text-xs text-gray-500">Format kolom: name, category, portionSize, calories, protein, sugar, carbohydrates, fat</p>
+                </div>
+                <div className="flex flex-col gap-2 w-full sm:w-auto">
+                  <input
+                    type="file"
+                    accept=".xlsx,.xls"
+                    onChange={(e) => {
+                      setImportFile(e.target.files?.[0] || null);
+                      setImportMessage("");
+                      setImportError("");
+                    }}
+                    className="w-full sm:w-auto text-sm text-gray-700"
+                  />
+                  <button
+                    type="button"
+                    onClick={async () => {
+                      if (!importFile) {
+                        setImportError("Pilih file Excel terlebih dahulu.");
+                        return;
+                      }
+
+                      setImportError("");
+                      setImportMessage("");
+                      setImporting(true);
+
+                      try {
+                        const data = new FormData();
+                        data.append("file", importFile);
+                        const res = await importFoods(data);
+                        setImportMessage(`Berhasil import ${res.imported} food.`);
+                        setImportFile(null);
+                        fetchFoods();
+                      } catch (err) {
+                        const message = err?.response?.data?.message || "Gagal import file Excel.";
+                        setImportError(message);
+                      } finally {
+                        setImporting(false);
+                      }
+                    }}
+                    disabled={importing}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold disabled:opacity-50"
+                  >
+                    {importing ? "Import..." : "Import Excel"}
+                  </button>
+                </div>
+              </div>
+              {importMessage && <p className="mt-3 text-sm text-green-600">{importMessage}</p>}
+              {importError && <p className="mt-3 text-sm text-red-600">{importError}</p>}
             </div>
 
             <div className="bg-white rounded-xl border shadow-sm overflow-hidden">

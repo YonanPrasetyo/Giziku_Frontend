@@ -8,7 +8,7 @@ import api from "../../../shared/utils/api";
 
 export default function MissionUpload() {
   const [isOpen, setIsOpen] = useState(() => window.innerWidth >= 1024);
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState(null);
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
   const [missions, setMissions] = useState([]);
@@ -39,18 +39,14 @@ export default function MissionUpload() {
     if (profileId) fetchData();
   }, [profileId]);
 
-  const toggleCheck = (id) => {
-    if (selected.includes(id)) {
-      setSelected(selected.filter((i) => i !== id));
-    } else {
-      setSelected([...selected, id]);
-    }
+  const handleSelect = (id) => {
+    setSelected(id);
   };
 
   const handleSubmit = async () => {
     try {
-      if (selected.length === 0) {
-        alert("Pilih minimal 1 misi");
+      if (!selected) {
+        alert("Pilih 1 misi");
         return;
       }
 
@@ -61,7 +57,7 @@ export default function MissionUpload() {
 
       const formData = new FormData();
 
-      formData.append("missionIds", JSON.stringify(selected));
+      formData.append("missionIds", JSON.stringify([selected]));
       formData.append("file", image);
 
       const res = await api.post(
@@ -107,9 +103,11 @@ export default function MissionUpload() {
               {missions.map((m) => (
                 <label key={m.id} className="flex items-center gap-3">
                   <input
-                    type="checkbox"
-                    checked={selected.includes(m.id)}
-                    onChange={() => toggleCheck(m.id)}
+                    type="radio"
+                    name="mission"
+                    value={m.id}
+                    checked={selected === m.id}
+                    onChange={() => handleSelect(m.id)}
                   />
                   <span>{m.title}</span>
                 </label>
