@@ -242,17 +242,6 @@ export default function Register() {
             icon={<PasswordIcon />}
           />
 
-          <div className="mb-6 flex items-start gap-2">
-            <input
-              type="checkbox"
-              id="terms"
-              className="mt-1 w-4 h-4 rounded border-[1.5px] border-[#E8EAF0] accent-[#2DBD7A] cursor-pointer"
-            />
-            <label htmlFor="terms" className="text-xs text-[#7B8090] font-medium leading-relaxed">
-              Saya setuju dengan <a href="#" className="text-[#1E9B5F] hover:text-[#2DBD7A] font-bold">Syarat & Ketentuan</a> dan <a href="#" className="text-[#1E9B5F] hover:text-[#2DBD7A] font-bold">Kebijakan Privasi</a>
-            </label>
-          </div>
-
           <Button
             type="submit"
             loading={isLoading}
