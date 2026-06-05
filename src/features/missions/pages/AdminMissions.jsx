@@ -22,7 +22,16 @@ export default function AdminMissions() {
   };
 
   useEffect(() => {
-    fetchData();
+    const fetchDataEffect = async () => {
+      try {
+        const res = await getMissions();
+        setMissions(res.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchDataEffect();
   }, []);
 
   const handleDelete = async (id) => {
@@ -46,7 +55,6 @@ export default function AdminMissions() {
         <main className="p-6">
           <div className="max-w-5xl mx-auto space-y-6">
 
-            {/* HEADER */}
             <div className="flex justify-between items-center">
               <h1 className="text-xl font-bold">Manajemen Misi</h1>
 
@@ -58,7 +66,6 @@ export default function AdminMissions() {
               </button>
             </div>
 
-            {/* LIST */}
             <div className="grid gap-4">
               {missions.map((m) => (
                 <div
@@ -66,7 +73,7 @@ export default function AdminMissions() {
                   className="bg-white p-4 rounded-xl border flex justify-between items-center"
                 >
                   <div>
-                    <h3 className="font-bold">{m.title}</h3>
+                    <h3 className="font-bold">{m.food?.name || m.title || "–"}</h3>
                     <p className="text-sm text-gray-500">{m.desc}</p>
                     <p className="text-xs text-green-600 font-semibold">
                       {m.xp} XP

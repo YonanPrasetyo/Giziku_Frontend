@@ -22,10 +22,8 @@ export default function Header({ isOpen, setIsOpen }) {
     <header className="bg-white border-b px-4 sm:px-6 lg:px-8 py-3">
       <div className="flex items-center justify-between">
 
-        {/* LEFT */}
         <div className="flex items-center gap-3">
 
-          {/* TOGGLE SIDEBAR */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="p-2 rounded-md hover:bg-gray-100"
@@ -51,10 +49,8 @@ export default function Header({ isOpen, setIsOpen }) {
           </h1>
         </div>
 
-        {/* RIGHT */}
         <div className="flex items-center gap-3 relative">
 
-          {/* AVATAR */}
           <button
             onClick={() => setOpenMenu(!openMenu)}
             className="w-9 h-9 bg-green-100 rounded-full flex items-center justify-center font-bold text-green-700"
@@ -62,11 +58,9 @@ export default function Header({ isOpen, setIsOpen }) {
             {user?.email?.charAt(0).toUpperCase() || "U"}
           </button>
 
-          {/* DROPDOWN */}
           {openMenu && (
             <div className="absolute right-0 top-12 w-48 bg-white border rounded-xl shadow-md overflow-hidden z-50">
 
-              {/* USER INFO */}
               <div className="px-4 py-3 border-b">
                 <p className="text-sm font-semibold">
                   {user?.email || "User"}
@@ -76,7 +70,6 @@ export default function Header({ isOpen, setIsOpen }) {
                 </p>
               </div>
 
-              {/* LOGOUT */}
               <button
                 onClick={handleLogout}
                 className="w-full text-left px-4 py-3 text-sm text-red-500 hover:bg-gray-50"

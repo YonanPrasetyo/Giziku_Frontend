@@ -18,6 +18,7 @@ import NutritionStandardForm from "./features/nutritionStandards/pages/Nutrition
 import Profile from "./features/profile/pages/Profile";
 import ProfileForm from "./features/profile/pages/ProfileForm";
 import AddFoodPhoto from "./features/foods/pages/AddFoodPhoto";
+import AddFoodText from "./features/foods/pages/AddFoodText";
 import ResultPage from "./features/foods/pages/ResultPage";
 import ResultHistoryPage from "./features/home/pages/ResultHistoryPage";
 import './App.css';
@@ -44,6 +45,7 @@ function App() {
           <Route path="/profile/edit/:id" element={<PrivateRoute roles={['user']}> <ProfileForm /> </PrivateRoute>} />
 
           <Route path="/add-food-photo" element={<PrivateRoute roles={['user']}> <AddFoodPhoto /> </PrivateRoute>} />
+          <Route path="/add-food-text" element={<PrivateRoute roles={['user']}> <AddFoodText /> </PrivateRoute>} />
           <Route path="/result/:id" element={<PrivateRoute roles={['user']}> <ResultPage /> </PrivateRoute>} />
 
           {/* Admin Routes */}

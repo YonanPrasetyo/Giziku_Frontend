@@ -1,9 +1,13 @@
+import { format2, percentOf, toNumber } from "../../../shared/utils/format";
+
 export default function DailySummary({ data, standard }) {
   if (!data || !standard) return null;
 
   const calcPercent = (value, max) => {
-    if (!max) return 0;
-    return Math.min((value / max) * 100, 100);
+    const numValue = toNumber(value);
+    const numMax = toNumber(max);
+    if (!numMax) return 0;
+    return Math.min(percentOf(numValue, numMax), 100);
   };
 
   return (
@@ -13,12 +17,11 @@ export default function DailySummary({ data, standard }) {
       </div>
       <div className="bg-white rounded-2xl p-5 border space-y-4">
 
-        {/* 🔥 CALORIES */}
         <div>
           <div className="flex justify-between mb-1">
             <h3 className="font-bold">Kalori</h3>
             <span className="text-sm text-gray-500">
-              {data.total_calories || 0} / {standard.calories} kkal
+              {format2(data.total_calories)} / {format2(standard.calories)} kkal
             </span>
           </div>
 
@@ -32,12 +35,11 @@ export default function DailySummary({ data, standard }) {
           </div>
         </div>
 
-        {/* 🔥 PROTEIN */}
         <div>
           <div className="flex justify-between mb-1">
             <h3 className="font-bold">Protein</h3>
             <span className="text-sm text-gray-500">
-              {data.total_protein || 0} / {standard.protein} g
+              {format2(data.total_protein)} / {format2(standard.protein)} g
             </span>
           </div>
 
@@ -51,12 +53,11 @@ export default function DailySummary({ data, standard }) {
           </div>
         </div>
 
-        {/* 🔥 SUGAR */}
         <div>
           <div className="flex justify-between mb-1">
             <h3 className="font-bold">Gula</h3>
             <span className="text-sm text-gray-500">
-              {data.total_sugar || 0} / {standard.sugar} g
+              {format2(data.total_sugar)} / {format2(standard.sugar)} g
             </span>
           </div>
 
@@ -70,19 +71,18 @@ export default function DailySummary({ data, standard }) {
           </div>
         </div>
 
-        {/* 🔥 NON-STANDARD (NO BAR) */}
         <div className="grid grid-cols-2 md:grid-cols-2 gap-3 text-center pt-2">
 
           <div>
             <p className="font-bold text-yellow-500">
-              {data.total_carbohydrates || 0}g
+              {format2(data.total_carbohydrates)}g
             </p>
             <p className="text-xs text-gray-500">Karbo</p>
           </div>
 
           <div>
             <p className="font-bold text-purple-500">
-              {data.total_fat || 0}g
+              {format2(data.total_fat)}g
             </p>
             <p className="text-xs text-gray-500">Lemak</p>
           </div>

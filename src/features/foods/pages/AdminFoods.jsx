@@ -6,6 +6,7 @@ import { getFoods, deleteFood, importFoods } from "../services/foodService";
 
 export default function AdminFoods() {
   const [foods, setFoods] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [isOpen, setIsOpen] = useState(() => window.innerWidth >= 1024);
   const [importFile, setImportFile] = useState(null);
   const [importMessage, setImportMessage] = useState("");
@@ -13,9 +14,9 @@ export default function AdminFoods() {
   const [importing, setImporting] = useState(false);
   const navigate = useNavigate();
 
-  const fetchFoods = async () => {
+  const fetchFoods = async (name = "") => {
     try {
-      const data = await getFoods();
+      const data = await getFoods(name);
       setFoods(data || []);
     } catch (err) {
       console.error(err);
@@ -23,12 +24,12 @@ export default function AdminFoods() {
   };
 
   useEffect(() => {
-    const loadFoods = async () => {
-      await fetchFoods();
-    };
+    const timer = setTimeout(() => {
+      fetchFoods(searchQuery.trim());
+    }, 300);
 
-    loadFoods();
-  }, []);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   const handleDelete = async (id) => {
     if (!confirm("Yakin mau hapus food?")) return;
@@ -51,9 +52,20 @@ export default function AdminFoods() {
         <main className="p-4 sm:p-6 lg:p-8 flex-1">
           <div className="max-w-6xl mx-auto space-y-6">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-              <div>
-                <h1 className="text-xl font-bold">Kelola Foods</h1>
-                <p className="text-sm text-gray-500">Tambahkan, edit, atau hapus data food.</p>
+              <div className="space-y-2">
+                <div>
+                  <h1 className="text-xl font-bold">Kelola Foods</h1>
+                  <p className="text-sm text-gray-500">Tambahkan, edit, atau hapus data food.</p>
+                </div>
+                <div className="w-full sm:w-80">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Cari food..."
+                    className="w-full border rounded-lg px-4 py-3 text-sm focus:border-blue-500 focus:outline-none"
+                  />
+                </div>
               </div>
 
               <button

@@ -20,7 +20,6 @@ export default function AddFoodPhoto() {
 
   const navigate = useNavigate();
 
-  // 🔥 FETCH PROFILES
   useEffect(() => {
     const fetchProfiles = async () => {
       try {
@@ -36,7 +35,6 @@ export default function AddFoodPhoto() {
     fetchProfiles();
   }, []);
 
-  // 🔥 SUBMIT
   const handleSubmit = async () => {
     try {
       if (!image) {
@@ -59,10 +57,17 @@ export default function AddFoodPhoto() {
         },
       });
 
-      const resultId = res.data.data.id;
-      console.log("Upload berhasil, result ID:", res.data);
+      const resultId = res.data?.data?.result?.id ?? res.data?.data?.id;
+      const completedMissions = res.data?.data?.completedMissions ?? [];
+      console.log("Upload berhasil, result response:", res.data);
 
-      navigate("/result/" + resultId);
+      if (!resultId) {
+        throw new Error("Result ID tidak ditemukan pada response API");
+      }
+
+      navigate(`/result/${resultId}`, {
+        state: { completedMissions },
+      });
     } catch (err) {
       console.error(err);
       alert("Gagal upload");
@@ -82,7 +87,6 @@ export default function AddFoodPhoto() {
         <main className="p-4 sm:p-6 lg:p-8 flex-1">
           <div className="max-w-3xl mx-auto space-y-6">
 
-            {/* UPLOAD */}
             <UploadCard
               image={image}
               setImage={setImage}
@@ -90,15 +94,22 @@ export default function AddFoodPhoto() {
               setPreview={setPreview}
             />
 
-            {/* PROFILE */}
             <ProfileSelectCard
               profiles={profiles}
               selectedProfile={selectedProfile}
               setSelectedProfile={setSelectedProfile}
             />
 
-            {/* SUBMIT */}
             <SubmitSection onSubmit={handleSubmit} />
+
+            <div className="bg-white rounded-xl border p-5">
+              <button
+                onClick={() => navigate("/add-food-text", { state: { profileId: selectedProfile } })}
+                className="w-full bg-slate-500 text-white py-3 rounded-xl font-bold hover:bg-slate-600"
+              >
+                Tambah dengan nama makanan
+              </button>
+            </div>
 
           </div>
         </main>

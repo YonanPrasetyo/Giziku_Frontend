@@ -95,7 +95,6 @@ export default function Dashboard() {
             <DailySummary data={summary} standard={standard} />
             <LatestMeals meals={latestMeals} />
 
-            {/* ACTION BUTTONS */}
             <div className="flex gap-3 flex-col sm:flex-row">
               <button
                 onClick={() => navigate("/history")}

@@ -6,7 +6,6 @@ export default function Sidebar({ isOpen, setIsOpen }) {
 
   return (
     <>
-      {/* Overlay */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black/30 z-40 lg:hidden"
@@ -30,7 +29,6 @@ export default function Sidebar({ isOpen, setIsOpen }) {
 
           <div className="flex-1 p-4 space-y-2">
 
-            {/* USER MENU */}
             {(!user || user.role === "user") && (
               <>
                 <NavItem to="/" label="Beranda" setIsOpen={setIsOpen} />
@@ -39,7 +37,6 @@ export default function Sidebar({ isOpen, setIsOpen }) {
               </>
             )}
 
-            {/* ADMIN MENU */}
             {user?.role === "admin" && (
               <>
                 <NavItem to="/admin/missions" label="Kelola Misi" setIsOpen={setIsOpen} />

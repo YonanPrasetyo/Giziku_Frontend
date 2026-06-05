@@ -1,7 +1,8 @@
 import api from "../../../shared/utils/api";
 
-export const getFoods = async () => {
-  const res = await api.get("/foods");
+export const getFoods = async (name) => {
+  const url = name ? `/foods/search?name=${encodeURIComponent(name)}` : "/foods";
+  const res = await api.get(url);
   return res.data.data;
 };
 

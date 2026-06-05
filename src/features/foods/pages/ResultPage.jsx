@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import Sidebar from "../../../shared/components/Sidebar";
 import Header from "../../../shared/components/Header";
 
@@ -19,23 +19,33 @@ export default function ResultPage() {
   const token = localStorage.getItem("token");
 
   const [result, setResult] = useState(null);
+  const [completedMissions, setCompletedMissions] = useState([]);
   const [standard, setStandard] = useState(null);
+  const location = useLocation();
 
   useEffect(() => {
     const fetchData = async () => {
       const res = await getResultById(id, token);
-      setResult(res);
+      const resultData = res?.result ?? res;
+      const missions = location.state?.completedMissions ?? [];
+
+      setResult(resultData);
+      setCompletedMissions(missions);
 
       console.log("Result:", res);
 
-      const std = await getNutritionStandard(res.age, res.gender, token);
-      setStandard(std);
+      if (resultData?.age && resultData?.gender) {
+        const std = await getNutritionStandard(resultData.age, resultData.gender, token);
+        setStandard(std);
+      } else {
+        setStandard(null);
+      }
     };
 
     fetchData();
-  }, [id]);
+  }, [id, token, location.state]);
 
-  if (!result || !standard) return <div>Loading...</div>;
+  if (!result) return <div>Loading...</div>;
 
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -55,36 +65,55 @@ export default function ResultPage() {
               <NutritionCard
                 label="Protein"
                 value={result.protein}
-                max={standard.protein}
+                max={standard?.protein ?? undefined}
                 color="blue"
                 unit="g"
               />
               <NutritionCard
                 label="Gula"
                 value={result.sugar}
-                max={standard.sugar}
+                max={standard?.sugar ?? undefined}
                 color="red"
                 unit="g"
               />
               <NutritionCard
                 label="Lemak"
                 value={result.fat}
-                max={standard.fat}
+                max={standard?.fat ?? undefined}
                 color="purple"
                 unit="g"
               />
               <NutritionCard
                 label="Karbohidrat"
                 value={result.carbohydrates}
-                max={standard.carbohydrates}
+                max={standard?.carbohydrates ?? undefined}
                 color="yellow"
                 unit="g"
               />
             </div>
           </div>
 
-          <SummaryTable result={result} standard={standard} />
-          <DailyContribution result={result} standard={standard} />
+          {completedMissions.length > 0 && (
+            <div className="bg-white rounded-xl border p-6 shadow-sm">
+              <h2 className="font-bold text-lg mb-4">Misi yang Disetujui</h2>
+              <div className="space-y-3">
+                {completedMissions.map((mission, index) => (
+                  <div key={mission.userMissionId || index} className="rounded-xl border p-4 bg-slate-50">
+                    <div className="flex items-center justify-between gap-4">
+                      <span className="font-semibold">Misi ID: {mission.userMissionId ?? "-"}</span>
+                      <span className={`text-xs font-semibold uppercase ${mission.status === "approved" ? "text-green-700" : "text-yellow-700"}`}>
+                        {mission.status}
+                      </span>
+                    </div>
+                    <p className="text-sm text-gray-600">XP: {mission.xp}</p>
+                    {mission.description ? (
+                      <p className="text-sm text-gray-700 mt-2">Deskripsi: {mission.description}</p>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </main>
 
         <BottomActions />

@@ -9,7 +9,6 @@ export default function ProfileMissionCard({ item }) {
   return (
     <div className="bg-white rounded-xl border shadow-sm p-5 space-y-4">
 
-      {/* HEADER */}
       <div className="flex justify-between items-center">
         <h2 className="font-bold text-lg">
           {item.profile.name}
@@ -20,7 +19,6 @@ export default function ProfileMissionCard({ item }) {
         </span>
       </div>
 
-      {/* LIST MISI (simple, hanya title) */}
       <div className="space-y-2">
         {item.missions.map((m) => (
           <div

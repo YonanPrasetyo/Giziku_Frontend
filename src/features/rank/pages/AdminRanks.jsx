@@ -34,7 +34,6 @@ export default function AdminRanks() {
         <main className="p-4 sm:p-6 lg:p-8 flex-1">
           <div className="max-w-5xl mx-auto space-y-6">
 
-            {/* HEADER */}
             <div className="flex justify-between items-center">
               <h1 className="text-xl font-bold">Kelola Rank</h1>
 
@@ -46,7 +45,6 @@ export default function AdminRanks() {
               </button>
             </div>
 
-            {/* LIST */}
             <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
               {ranks.length === 0 ? (
                 <div className="p-5 text-center text-gray-500">

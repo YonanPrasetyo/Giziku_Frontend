@@ -8,10 +8,8 @@ export default function ResultModal({ show, data, onClose }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
 
-      {/* overlay */}
       <div className="absolute inset-0 bg-black/40"></div>
 
-      {/* modal */}
       <div className="relative bg-white w-full max-w-md rounded-xl p-6 shadow-lg z-10">
 
         <h2 className="text-lg font-bold mb-4">

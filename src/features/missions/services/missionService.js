@@ -1,13 +1,16 @@
 import api from "../../../shared/utils/api";
 
-// User
 
 export const getUserMissions = async () => {
   const res = await api.get("/user-missions");
-  return res.data; // biasanya { data: [...] }
+  return res.data;
 };
 
-// Admin
+export const getRankByXp = async () => {
+  const res = await api.get("/rank/xp");
+  return res.data?.data || null;
+};
+
 
 export const getMissions = async () => {
   const res = await api.get("/missions");

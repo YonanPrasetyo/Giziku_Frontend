@@ -24,7 +24,6 @@ export default function ProfileSelectCard({
         ))}
       </select>
 
-      {/* CHIP */}
       <div className="flex flex-wrap gap-2">
         {profiles.map((p) => (
           <button

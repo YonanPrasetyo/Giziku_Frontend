@@ -39,26 +39,20 @@ export default function HistoryPage() {
 
   return (
     <div className="bg-gray-100 min-h-screen">
-      {/* SIDEBAR */}
       <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
 
-      {/* CONTENT */}
       <div className={`flex flex-col min-h-screen ${isOpen ? "lg:ml-64" : ""}`}>
         
-        {/* HEADER */}
         <Header isOpen={isOpen} setIsOpen={setIsOpen} />
 
         <main className="p-4 sm:p-6 lg:p-8 flex-1">
           <div className="max-w-4xl mx-auto space-y-6">
 
-            {/* TITLE */}
             <h1 className="text-2xl font-bold">Riwayat Misi</h1>
 
-            {/* LIST HISTORY */}
             {history.map((day, index) => (
               <div key={index} className="bg-white p-5 rounded-xl border shadow-sm">
 
-                {/* TANGGAL */}
                 <h2 className="font-semibold text-lg mb-4">
                   {day.date}
                 </h2>
@@ -70,7 +64,6 @@ export default function HistoryPage() {
                     return (
                       <div key={i} className="border rounded-xl p-4">
 
-                        {/* HEADER BATCH */}
                         <div className="flex justify-between items-center mb-3">
                           <h3 className="font-semibold">
                             {batch.type}
@@ -80,7 +73,6 @@ export default function HistoryPage() {
                           </span>
                         </div>
 
-                        {/* LIST MISI */}
                         <ul className="space-y-2">
                           {batch.missions.map((mission, j) => (
                             <li key={j} className="flex items-center gap-2">

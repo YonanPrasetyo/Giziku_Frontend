@@ -154,13 +154,10 @@ export default function Register() {
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#E8F8F1] via-white to-[#E8F8F1] flex flex-col lg:justify-center lg:px-8">
       <div className="w-full max-w-md mx-auto lg:max-w-md">
-      {/* Hero Section */}
       <div className="bg-gradient-to-br from-[#1E9B5F] via-[#2DBD7A] to-[#52D48F] px-7 pt-16 pb-14 relative overflow-hidden">
-        {/* Decorative circles */}
         <div className="absolute w-60 h-60 rounded-full bg-white/7 -top-20 -right-20"></div>
         <div className="absolute w-40 h-40 rounded-full bg-white/5 -bottom-12 -left-12"></div>
 
-        {/* Logo */}
         <div className="relative z-10 flex flex-col items-center">
           <h1 className="text-3xl font-black text-white mb-2 tracking-tight">Giziku</h1>
           <p className="text-white/82 text-sm text-center leading-relaxed max-w-56">
@@ -169,12 +166,10 @@ export default function Register() {
         </div>
       </div>
 
-      {/* Form Section */}
       <div className="bg-white flex-1 px-7 pt-9 pb-11 rounded-t-3xl -mt-6 relative z-20 shadow-sm overflow-y-auto">
         <h2 className="text-2xl font-black text-[#1A1A2E] mb-1">Daftar 👋</h2>
         <p className="text-xs text-[#7B8090] font-medium mb-7">Buat akun Giziku Anda sekarang</p>
 
-        {/* Alert Messages */}
         {error && (
           <AlertMessage 
             type="error" 
@@ -190,7 +185,6 @@ export default function Register() {
           />
         )}
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="mb-6">
           <FormInput
             label="Username"
@@ -248,7 +242,6 @@ export default function Register() {
             icon={<PasswordIcon />}
           />
 
-          {/* Terms */}
           <div className="mb-6 flex items-start gap-2">
             <input
               type="checkbox"
@@ -260,7 +253,6 @@ export default function Register() {
             </label>
           </div>
 
-          {/* Submit Button */}
           <Button
             type="submit"
             loading={isLoading}
@@ -271,7 +263,6 @@ export default function Register() {
           </Button>
         </form>
 
-        {/* Login Link */}
         <p className="text-center text-xs text-[#7B8090] font-medium mt-7">
           Sudah punya akun? 
           <Link 

@@ -3,7 +3,6 @@ import HistoryItem from "./HistoryItem";
 export default function HistoryGroup({ date, items }) {
   return (
     <div>
-      {/* DATE */}
       <h2 className="text-sm font-bold text-gray-500 mb-2">
         {date}
       </h2>

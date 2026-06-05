@@ -7,19 +7,16 @@ export default function RankBar({ rank, xp }) {
   return (
     <div className="bg-white rounded-xl border p-5 flex items-center gap-4 shadow-sm">
 
-      {/* ICON */}
       <img
         src={rank.icon_url}
         alt={rank.name}
         className="w-14 h-14 object-contain"
       />
 
-      {/* INFO */}
       <div className="flex-1">
         <p className="text-sm text-gray-500">Rank Kamu</p>
         <h2 className="font-bold text-lg capitalize">{rank.name}</h2>
 
-        {/* PROGRESS BAR */}
         <div className="mt-2">
           <div className="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
             <div

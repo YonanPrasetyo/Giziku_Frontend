@@ -114,10 +114,8 @@ export default function RankForm() {
                 required
               />
 
-              {/* Upload */}
               <input type="file" onChange={handleFile} />
 
-              {/* Preview */}
               {preview && (
                 <img
                   src={preview}

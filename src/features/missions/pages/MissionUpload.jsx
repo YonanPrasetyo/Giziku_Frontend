@@ -90,7 +90,6 @@ export default function MissionUpload() {
         <main className="p-4 sm:p-6 lg:p-8 flex-1">
           <div className="max-w-2xl mx-auto space-y-6">
 
-            {/* TITLE */}
             <div>
               <h1 className="text-xl font-extrabold">Upload Bukti Misi</h1>
               <p className="text-sm text-gray-500">
@@ -98,7 +97,6 @@ export default function MissionUpload() {
               </p>
             </div>
 
-            {/* CHECKLIST */}
             <div className="bg-white p-5 rounded-xl border space-y-3">
               {missions.map((m) => (
                 <label key={m.id} className="flex items-center gap-3">
@@ -114,7 +112,6 @@ export default function MissionUpload() {
               ))}
             </div>
 
-            {/* UPLOAD */}
             <div className="bg-white p-5 rounded-xl border">
               <input
                 type="file"
@@ -136,7 +133,6 @@ export default function MissionUpload() {
               )}
             </div>
 
-            {/* BUTTON */}
             <button
               onClick={handleSubmit}
               className="w-full h-12 bg-green-500 text-white rounded-xl font-bold hover:bg-green-600"
@@ -148,7 +144,6 @@ export default function MissionUpload() {
         </main>
       </div>
 
-      {/* 🔥 MODAL */}
       <ResultModal
         show={showModal}
         data={result || []}

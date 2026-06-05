@@ -9,6 +9,11 @@ export const getResultById = async (id, token) => {
   return res.data.data;
 };
 
+export const createResultByFoodName = async (payload) => {
+  const res = await api.post("/results/direct", payload);
+  return res.data.data;
+};
+
 export const getNutritionStandard = async (age, gender, token) => {
   const res = await api.get(
     `/nutrition-standards/age/${age}/gender/${gender}`,

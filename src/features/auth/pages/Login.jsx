@@ -116,13 +116,10 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#E8F8F1] via-white to-[#E8F8F1] flex flex-col lg:justify-center lg:px-8">
       <div className="w-full max-w-md mx-auto lg:max-w-md">
-      {/* Hero Section */}
       <div className="bg-gradient-to-br from-[#1E9B5F] via-[#2DBD7A] to-[#52D48F] px-7 pt-16 pb-14 relative overflow-hidden">
-        {/* Decorative circles */}
         <div className="absolute w-60 h-60 rounded-full bg-white/7 -top-20 -right-20"></div>
         <div className="absolute w-40 h-40 rounded-full bg-white/5 -bottom-12 -left-12"></div>
 
-        {/* Logo */}
         <div className="relative z-10 flex flex-col items-center">
           <h1 className="text-3xl font-black text-white mb-2 tracking-tight">Giziku</h1>
           <p className="text-white/82 text-sm text-center leading-relaxed max-w-56">
@@ -131,12 +128,10 @@ export default function Login() {
         </div>
       </div>
 
-      {/* Form Section */}
       <div className="bg-white flex-1 px-7 pt-9 pb-11 rounded-t-3xl -mt-6 relative z-20 shadow-sm">
         <h2 className="text-2xl font-black text-[#1A1A2E] mb-1">Selamat Datang 👋</h2>
         <p className="text-xs text-[#7B8090] font-medium mb-7">Masuk ke akun kamu untuk mulai melacak nutrisi</p>
 
-        {/* Alert Message */}
         {error && (
           <AlertMessage 
             type="error" 
@@ -145,7 +140,6 @@ export default function Login() {
           />
         )}
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="mb-6">
           <FormInput
             label="Email"
@@ -173,7 +167,6 @@ export default function Login() {
             icon={<PasswordIcon />}
           />
 
-          {/* Forgot Password Link */}
           <div className="text-right mb-6 -mt-1">
             <Link 
               to="#"
@@ -183,7 +176,6 @@ export default function Login() {
             </Link>
           </div>
 
-          {/* Submit Button */}
           <Button
             type="submit"
             disabled={isLoading}
@@ -194,7 +186,6 @@ export default function Login() {
           </Button>
         </form>
 
-        {/* Register Link */}
         <p className="text-center text-xs text-[#7B8090] font-medium mt-7">
           Belum punya akun? 
           <Link 

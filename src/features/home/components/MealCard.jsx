@@ -1,3 +1,5 @@
+import { format2 } from "../../../shared/utils/format";
+
 export default function MealCard({ data }) {
   return (
     <div className="bg-white rounded-2xl border p-4 space-y-3">
@@ -7,7 +9,7 @@ export default function MealCard({ data }) {
           {new Date(data.created_at).toLocaleTimeString()}
         </span>
         <span className="text-sm font-bold text-green-600">
-          {data.calories} kkal
+          {format2(data.calories)} kkal
         </span>
       </div>
 
@@ -15,19 +17,19 @@ export default function MealCard({ data }) {
 
       <div className="grid grid-cols-4 text-center text-xs">
         <div>
-          <p className="font-bold text-blue-500">{data.protein}g</p>
+          <p className="font-bold text-blue-500">{format2(data.protein)}g</p>
           <p className="text-gray-400">Protein</p>
         </div>
         <div>
-          <p className="font-bold text-yellow-500">{data.carbohydrates}g</p>
+          <p className="font-bold text-yellow-500">{format2(data.carbohydrates)}g</p>
           <p className="text-gray-400">Karbo</p>
         </div>
         <div>
-            <p className="font-bold text-red-500">{data.sugar}g</p>
+            <p className="font-bold text-red-500">{format2(data.sugar)}g</p>
             <p className="text-gray-400">Gula</p>
         </div>
         <div>
-          <p className="font-bold text-purple-500">{data.fat}g</p>
+          <p className="font-bold text-purple-500">{format2(data.fat)}g</p>
           <p className="text-gray-400">Lemak</p>
         </div>
       </div>

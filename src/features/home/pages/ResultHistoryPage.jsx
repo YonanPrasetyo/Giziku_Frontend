@@ -14,7 +14,6 @@ export default function ResultHistoryPage() {
 
   const [results, setResults] = useState([]);
 
-  // FETCH PROFILE
   useEffect(() => {
     const fetchProfiles = async () => {
       const res = await api.get("/profiles");
@@ -24,7 +23,6 @@ export default function ResultHistoryPage() {
     fetchProfiles();
   }, []);
 
-  // FETCH RESULTS
   useEffect(() => {
     if (!selectedProfile) return;
 
@@ -41,7 +39,6 @@ export default function ResultHistoryPage() {
     fetchResults();
   }, [selectedProfile]);
 
-  // 🔥 GROUP BY DATE
   const grouped = results.reduce((acc, item) => {
     const date = new Date(item.date).toLocaleDateString();
 
@@ -61,7 +58,6 @@ export default function ResultHistoryPage() {
         <main className="p-4 sm:p-6 lg:p-8 flex-1">
           <div className="max-w-5xl mx-auto space-y-6">
 
-            {/* HEADER SECTION */}
             <div className="flex justify-between items-center">
               <h1 className="text-xl font-extrabold">Riwayat Makanan</h1>
 
@@ -77,7 +73,6 @@ export default function ResultHistoryPage() {
                 />
               </div>
 
-            {/* LIST */}
             {Object.keys(grouped).map((date) => (
               <HistoryGroup key={date} date={date} items={grouped[date]} />
             ))}
